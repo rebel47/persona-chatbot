@@ -1,4 +1,4 @@
-# WhatsApp Persona Chatbot
+# Persona Chatbot
 
 ## Overview
 This project is a chatbot that emulates the conversational style of a selected person based on their WhatsApp chat history. Users can upload a WhatsApp chat log between two people, select the persona they want to interact with, and chat with a bot that mimics the style of the chosen individual.
