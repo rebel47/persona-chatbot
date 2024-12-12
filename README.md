@@ -67,25 +67,6 @@ whatsapp-persona-chatbot/
 
 ---
 
-## Issues
-
-### 1. Preprocessing Edge Cases
-- **Description**: The preprocessing script may fail with non-standard WhatsApp chat formats.
-- **Solution**: Add robust error handling and format validation.
-
-### 2. Large Chat Files
-- **Description**: Processing large files might cause memory or performance issues.
-- **Solution**: Implement line-by-line streaming and chunk processing.
-
-### 3. Persona Emulation Accuracy
-- **Description**: The bot's style emulation may not perfectly match the selected persona.
-- **Solution**: Improve style extraction and add prompt engineering to refine the persona.
-
-### 4. Deployment Free Tier Limits
-- **Description**: The free tier of Hugging Face Spaces might have compute or storage limitations.
-- **Solution**: Optimize model size, embeddings, and database for lightweight operation.
-
----
 
 ## Contributions
 Feel free to contribute to this project by submitting a pull request or reporting issues. Follow the guidelines in `CONTRIBUTING.md`.
