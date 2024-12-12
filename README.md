@@ -10,8 +10,6 @@ This project is a chatbot that emulates the conversational style of a selected p
 - **Persona Selection**: Choose between two participants for chatbot emulation.
 - **Conversational Style Emulation**: The bot uses the selected person's message style to generate responses.
 - **Interactive Frontend**: User-friendly chat interface with upload and dropdown options.
-- **Free Deployment**: Runs on Hugging Face Spaces using Streamlit or Gradio.
-
 ---
 
 ## Tech Stack
@@ -32,8 +30,8 @@ This project is a chatbot that emulates the conversational style of a selected p
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/whatsapp-persona-chatbot.git
-   cd whatsapp-persona-chatbot
+   git clone https://github.com/rebel47/persona-chatbot.git
+   cd persona-chatbot
    ```
 
 2. Install dependencies:
