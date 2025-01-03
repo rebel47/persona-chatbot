@@ -4,6 +4,8 @@
 
 This project is an AI-powered chatbot that mimics the conversational style of a selected person based on their WhatsApp chat history. Users can upload a WhatsApp chat log, select a persona, and interact with a bot that generates responses emulating the tone, personality, and communication style of the chosen individual.
 
+Try it live here: [Persona Chatbot](https://persona-chat.streamlit.app/)
+
 ## Features
 
 - **WhatsApp Chat Preprocessing**: Parse and clean uploaded WhatsApp chat logs for easy processing.
