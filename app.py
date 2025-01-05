@@ -62,7 +62,7 @@ class RAGChatbot:
             st.session_state["current_session"] = None
 
     def setup_ui(self):
-        st.title("RAG Chatbot: Emulate Chat Tone")
+        st.title("Persona Chatbot: Emulate Chat Tone")
         self.setup_sidebar()
         self.setup_chat_interface()
 
