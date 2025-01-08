@@ -63,6 +63,7 @@ class RAGChatbot:
 
     def setup_ui(self):
         st.title("Persona Chatbot: Emulate Chat Tone")
+        st.text("       - Developed By: Mohammad Ayaz Alam")
         self.setup_sidebar()
         self.setup_chat_interface()
 
