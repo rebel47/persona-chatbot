@@ -44,7 +44,7 @@ class ChatSession:
 
     def initialize_gemini_chat(self):
         self.model = genai.GenerativeModel(
-            model_name="gemini-1.5-pro",
+            model_name="gemini-1.5-flash",
             generation_config=GENERATION_CONFIG
         )
         self.gemini_chat = self.model.start_chat(history=[])
