@@ -1,75 +1,137 @@
-# Persona Chatbot: Emulate Conversational Style
+# Persona Chatbot: Emulate Chat Tone
 
 ## Overview
 
-This project is an AI-powered chatbot that mimics the conversational style of a selected person based on their WhatsApp chat history. Users can upload a WhatsApp chat log, select a persona, and interact with a bot that generates responses emulating the tone, personality, and communication style of the chosen individual.
+A sophisticated AI chatbot that can emulate the conversational style of specific individuals based on their WhatsApp chat history. The bot can take on different relationship roles (mother, father, friend, etc.) while maintaining the authentic communication style of the selected person.
 
-Try it live here: [Persona Chatbot](https://persona-chat.streamlit.app/)
+Last Updated: 2025-02-21 05:12:22 UTC
 
-## Features
+## Key Features
 
-- **WhatsApp Chat Preprocessing**: Parse and clean uploaded WhatsApp chat logs for easy processing.
-- **Persona Selection**: Choose between two participants in the chat for persona emulation.
-- **Conversational Style Emulation**: The bot uses the selected person's message history to emulate their style, tone, and manner of speaking.
-- **Interactive Frontend**: User-friendly interface built with Streamlit, allowing users to upload chat logs, select a persona, and chat with the bot in real-time.
-- **Contextual Chat**: Leverages the **Google Gemini API** for generating context-aware responses based on conversation history.
+### Core Functionality
+- **Relationship-Based Interactions**: Choose from various relationship types (parent, sibling, friend, etc.)
+- **Style Emulation**: Accurately mimics the selected person's communication patterns
+- **Context-Aware Responses**: Maintains conversation coherence using chat history
+- **Multi-Session Support**: Create and manage multiple chat sessions
+
+### Technical Features
+- **RAG Implementation**: Uses Retrieval-Augmented Generation for accurate response generation
+- **Vector Search**: FAISS-powered similarity search for relevant context retrieval
+- **Robust Error Handling**: Graceful handling of API limits and errors
+- **Clean, Modern UI**: Streamlit-based interface with custom styling
 
 ## Tech Stack
 
-### Backend
-- **Python**: Core programming language used for app development.
-- **LangChain**: Facilitates the **Retrieval-Augmented Generation (RAG)** pipeline for efficient document retrieval and response generation.
-- **FAISS/ChromaDB**: Vector databases for storing and searching message embeddings.
-- **Gemini API**: Language model used for generating responses that emulate the selected persona’s conversational style.
+### Core Technologies
+- **Python**: Primary development language
+- **Google Gemini API**: Large language model for response generation
+- **LangChain**: Framework for RAG implementation
+- **FAISS**: Vector storage and similarity search
+- **Streamlit**: Web interface framework
 
-### Frontend
-- **Streamlit**: A simple, interactive UI framework for building web applications.
-
-### Deployment
-- **Hugging Face Spaces**: Free hosting for the application.
+### Additional Libraries
+- **google-generativeai**: Gemini API integration
+- **langchain-google-genai**: LangChain integration for Gemini
+- **python-dotenv**: Environment variable management
+- **logging**: Comprehensive error tracking
 
 ## Installation
 
 1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/rebel47/persona-chatbot.git
-   cd persona-chatbot
-   ```
-
-2. Install dependencies:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Run the app locally:
-
-   ```bash
-   streamlit run app.py
-   ```
-
-## Usage
-
-1. Upload a `.txt` file containing WhatsApp chat logs.
-2. Select the persona (Person A or Person B) you want the chatbot to emulate from the dropdown.
-3. Start interacting with the chatbot, which will generate responses that mimic the selected persona’s conversational style.
-
-## File Structure
-
-```
-whatsapp-persona-chatbot/
-├── app.py                # Main application script
-├── preprocessing.py      # Preprocessing WhatsApp chat logs
-├── fine_tuning.py        # Persona data preparation for training the chatbot
-├── requirements.txt      # Required Python packages
-└── README.md             # Project documentation
+```bash
+git clone https://github.com/rebel47/persona-chatbot.git
+cd persona-chatbot
 ```
 
-## Contributions
+2. Create and activate a virtual environment:
+```bash
+python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+```
 
-Feel free to contribute to this project by submitting a pull request or reporting issues. Please follow the guidelines in the `CONTRIBUTING.md` file.
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+4. Set up environment variables:
+```bash
+# Create .env file
+echo "GOOGLE_API_KEY=your_gemini_api_key_here" > .env
+```
+
+5. Run the application:
+```bash
+streamlit run main.py
+```
+
+## Project Structure
+
+```
+persona-chatbot/
+├── config/
+│   └── settings.py           # Configuration and environment variables
+├── models/
+│   └── chat_session.py       # Chat session management
+├── services/
+│   └── rag_chatbot.py        # Core chatbot implementation
+├── utils/
+│   ├── embeddings.py         # Vector embedding utilities
+│   └── message_parser.py     # WhatsApp message parsing
+├── main.py                   # Application entry point
+├── requirements.txt          # Project dependencies
+└── README.md                # Project documentation
+```
+
+## Usage Guide
+
+1. **Start the Application**
+   - Run the application using `streamlit run main.py`
+   - Access the web interface at `http://localhost:8501`
+
+2. **Upload Chat Data**
+   - Click "Upload WhatsApp Chat" in the sidebar
+   - Select a WhatsApp chat export file (`.txt` format)
+
+3. **Configure Chat**
+   - Select the person to emulate from the chat
+   - Choose or enter a relationship type
+   - Click "Start Training" to initialize the chat
+
+4. **Start Chatting**
+   - Type messages in the chat input
+   - Receive responses that match the selected person's style
+   - Switch between different chat sessions as needed
+
+## Error Handling
+
+The application includes robust error handling for common issues:
+- API quota management
+- Rate limiting
+- File processing errors
+- Model initialization issues
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes:
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Developer
+
+Developed by: Mohammad Ayaz Alam (rebel47)  
+Contact: [GitHub Profile](https://github.com/rebel47)
+
+## Acknowledgments
+
+- Google Gemini API for providing the language model
+- Streamlit for the excellent web framework
+- The open-source community for various tools and libraries
