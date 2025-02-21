@@ -62,7 +62,7 @@ echo "GOOGLE_API_KEY=your_gemini_api_key_here" > .env
 
 5. Run the application:
 ```bash
-streamlit run main.py
+streamlit run app.py
 ```
 
 ## Project Structure
