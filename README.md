@@ -4,7 +4,6 @@
 
 A sophisticated AI chatbot that can emulate the conversational style of specific individuals based on their WhatsApp chat history. The bot can take on different relationship roles (mother, father, friend, etc.) while maintaining the authentic communication style of the selected person.
 
-Last Updated: 2025-02-21 05:12:22 UTC
 
 ## Key Features
 
