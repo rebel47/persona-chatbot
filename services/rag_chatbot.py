@@ -17,7 +17,7 @@ class RAGChatbot:
         """Initialize the RAG chatbot service."""
         self.embedding_manager = EmbeddingManager()
         self.initialize_session_state()
-        self.message_parser = MessageParser()
+        self.message_parser = MessageParser(use_ai=False)  # ⚡ Fast regex parsing by default
         self.setup_ui()
 
     @staticmethod
@@ -77,12 +77,23 @@ class RAGChatbot:
     def process_uploaded_file(self, uploaded_file) -> None:
         """Process the uploaded chat log file with relationship selection."""
         try:
-            lines = uploaded_file.read().decode("utf-8").splitlines()
-            messages = self.message_parser.parse_messages(lines)
+            # ⚡ Show parsing progress
+            with st.spinner("📖 Reading chat file..."):
+                lines = uploaded_file.read().decode("utf-8").splitlines()
+            
+            with st.spinner("🔍 Parsing messages (smart detection)..."):
+                messages = self.message_parser.parse_messages(lines, use_ai=False)  # Fast regex first
             
             if not messages:
-                st.error("No valid messages found in the file.")
+                st.warning("⚠️ Standard format not detected. Trying AI-powered parsing...")
+                with st.spinner("🤖 AI analyzing chat format... (10-20 seconds)"):
+                    messages = self.message_parser.parse_messages(lines, use_ai=True)
+            
+            if not messages:
+                st.error("❌ No valid messages found. Please check the file format.")
                 return
+            
+            st.success(f"✅ Successfully parsed {len(messages)} messages!")
                 
             senders = sorted(set(msg["sender"] for msg in messages))
             
@@ -100,12 +111,11 @@ class RAGChatbot:
             
             if target_name and relationship_type:
                 if st.button("🚀 Start Training", use_container_width=True):
-                    with st.spinner(f"Training {relationship_type} {target_name}..."):
-                        self.train_model(
-                            target_name=target_name,
-                            messages=messages,
-                            relationship=relationship_type
-                        )
+                    self.train_model(
+                        target_name=target_name,
+                        messages=messages,
+                        relationship=relationship_type
+                    )
                 
         except Exception as e:
             st.error(f"Error processing file: {str(e)}")
@@ -156,15 +166,28 @@ class RAGChatbot:
                 st.error(f"No training data found for {target_name}")
                 return
             
-            # Show progress
-            progress_text = f"Processing {len(formatted_data)} conversations..."
-            with st.spinner(progress_text):
-                vector_store = self.embedding_manager.create_vector_store(formatted_data)
+            # ⚡ Show detailed progress with progress bar
+            progress_bar = st.progress(0)
+            status_text = st.empty()
             
+            status_text.text(f"📊 Extracted {len(formatted_data)} training examples for {target_name}")
+            progress_bar.progress(25)
+            
+            status_text.text(f"🧠 Creating embeddings... (this may take 20-30 seconds)")
+            progress_bar.progress(50)
+            
+            vector_store = self.embedding_manager.create_vector_store(formatted_data)
+            progress_bar.progress(75)
+            
+            status_text.text(f"✨ Initializing AI model...")
             session = st.session_state["chat_sessions"][session_id]
             session.db = vector_store
             session.initialize_gemini_chat()
             session.is_trained = True
+            
+            progress_bar.progress(100)
+            status_text.empty()
+            progress_bar.empty()
             
             st.success(f"✅ Ready! You can now chat with {relationship} {target_name}")
                 
@@ -265,10 +288,18 @@ class RAGChatbot:
                 typing_placeholder.markdown(f"*{session.target_name} is typing...*")
                 
                 try:
-                    bot_response = self.generate_response(prompt, session)
+                    # ⚡ STREAMING RESPONSE for instant feedback
+                    response_placeholder = st.empty()
+                    full_response = ""
+                    
+                    # Generate and stream response
+                    for chunk in self.generate_response_stream(prompt, session):
+                        full_response += chunk
+                        response_placeholder.markdown(full_response + "▌")  # Blinking cursor
+                    
                     typing_placeholder.empty()
-                    st.write(bot_response)
-                    session.add_message("assistant", bot_response)
+                    response_placeholder.markdown(full_response)
+                    session.add_message("assistant", full_response)
                     
                 except google.api_core.exceptions.ResourceExhausted as e:
                     typing_placeholder.empty()
@@ -321,4 +352,52 @@ Now respond as {session.target_name} (ONLY give the response, no thinking proces
             
         except Exception as e:
             logger.error(f"Error generating response: {str(e)}", exc_info=True)
+            raise
+    
+    def generate_response_stream(self, question: str, session: ChatSession):
+        """
+        ⚡ STREAMING version - yields response chunks as they're generated.
+        Provides instant visual feedback to users.
+        """
+        try:
+            docs = self.embedding_manager.get_similar_documents(question, session.db)
+            
+            # Extract examples for better context
+            examples = []
+            for doc in docs[:3]:  # Top 3 most relevant
+                parts = doc.page_content.split(maxsplit=1)
+                if len(parts) == 2:
+                    examples.append(f"Q: {parts[0]}\nA: {parts[1]}")
+            
+            context_examples = "\n\n".join(examples)
+
+            prompt = f"""You are {session.target_name}, {session.generate_prompt_prefix()}.
+
+IMPORTANT: Respond EXACTLY as {session.target_name} would - matching their tone, style, vocabulary, and personality.
+
+Here's how {session.target_name} typically responds:
+{context_examples}
+
+Recent conversation:
+{json.dumps(session.chat_history[-3:], indent=2) if session.chat_history else "None"}
+
+Current message: "{question}"
+
+Think step by step:
+1. What is the person asking/saying?
+2. How would {session.target_name} feel about this?
+3. What would {session.target_name} typically say in this situation?
+4. What tone and words would {session.target_name} use?
+
+Now respond as {session.target_name} (ONLY give the response, no thinking process):"""
+            
+            # Stream response chunks
+            response = session.gemini_chat.send_message(prompt, stream=True)
+            
+            for chunk in response:
+                if chunk.text:
+                    yield chunk.text
+            
+        except Exception as e:
+            logger.error(f"Error generating streaming response: {str(e)}", exc_info=True)
             raise
