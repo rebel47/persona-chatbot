@@ -1,103 +1,64 @@
-# Persona Chatbot: Emulate Chat Tone
+# 💬 Persona Chatbot
 
-## Overview
+AI chatbot that emulates conversational styles from WhatsApp chat history.
 
-A sophisticated AI chatbot that can emulate the conversational style of specific individuals based on their WhatsApp chat history. The bot can take on different relationship roles (mother, father, friend, etc.) while maintaining the authentic communication style of the selected person.
+## Features
 
-
-## Key Features
-
-### Core Functionality
-- **Relationship-Based Interactions**: Choose from various relationship types (parent, sibling, friend, etc.)
-- **Style Emulation**: Accurately mimics the selected person's communication patterns
-- **Context-Aware Responses**: Maintains conversation coherence using chat history
-- **Multi-Session Support**: Create and manage multiple chat sessions
-
-### Technical Features
-- **RAG Implementation**: Uses Retrieval-Augmented Generation for accurate response generation
-- **Vector Search**: FAISS-powered similarity search for relevant context retrieval
-- **Robust Error Handling**: Graceful handling of API limits and errors
-- **Clean, Modern UI**: Streamlit-based interface with custom styling
+- 🎭 Emulates specific person's chat style
+- 👨‍👩‍👧‍👦 Multiple relationship types (Mother, Father, Friend, etc.)
+- 🧠 RAG-powered responses using chat context
+- 💾 Multi-session support
+- 🚀 Local embeddings (unlimited, free)
 
 ## Tech Stack
 
-### Core Technologies
-- **Python**: Primary development language
-- **Google Gemini API**: Large language model for response generation
-- **LangChain**: Framework for RAG implementation
-- **FAISS**: Vector storage and similarity search
-- **Streamlit**: Web interface framework
-
-### Additional Libraries
-- **google-generativeai**: Gemini API integration
-- **langchain-google-genai**: LangChain integration for Gemini
-- **python-dotenv**: Environment variable management
-- **logging**: Comprehensive error tracking
+- **Streamlit** - Web interface
+- **Google Gemini** - Text generation
+- **HuggingFace** - Local embeddings
+- **FAISS** - Vector search
+- **LangChain** - RAG framework
 
 ## Installation
 
-1. Clone the repository:
 ```bash
+# Clone repository
 git clone https://github.com/rebel47/persona-chatbot.git
 cd persona-chatbot
-```
 
-2. Create and activate a virtual environment:
-```bash
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-```
-
-3. Install dependencies:
-```bash
+# Install dependencies
 pip install -r requirements.txt
-```
 
-4. Set up environment variables:
-```bash
-# Create .env file
-echo "GOOGLE_API_KEY=your_gemini_api_key_here" > .env
-```
+# Set up API key
+echo "GOOGLE_API_KEY=your_key_here" > .env
 
-5. Run the application:
-```bash
+# Run app
 streamlit run app.py
 ```
 
-## Project Structure
+## Usage
 
-```
-persona-chatbot/
-├── config/
-│   └── settings.py           # Configuration and environment variables
-├── models/
-│   └── chat_session.py       # Chat session management
-├── services/
-│   └── rag_chatbot.py        # Core chatbot implementation
-├── utils/
-│   ├── embeddings.py         # Vector embedding utilities
-│   └── message_parser.py     # WhatsApp message parsing
-├── main.py                   # Application entry point
-├── requirements.txt          # Project dependencies
-└── README.md                # Project documentation
-```
+1. Upload WhatsApp chat export (.txt)
+2. Select person to emulate
+3. Choose relationship type
+4. Click "Start Training"
+5. Start chatting!
 
-## Usage Guide
+## Deployment
 
-1. **Start the Application**
-   - Run the application using `streamlit run main.py`
-   - Access the web interface at `http://localhost:8501`
+Deploy on Streamlit Cloud:
+1. Push to GitHub
+2. Connect to Streamlit Cloud
+3. Add `GOOGLE_API_KEY` in secrets
+4. Deploy!
 
-2. **Upload Chat Data**
-   - Click "Upload WhatsApp Chat" in the sidebar
-   - Select a WhatsApp chat export file (`.txt` format)
+## License
 
-3. **Configure Chat**
-   - Select the person to emulate from the chat
-   - Choose or enter a relationship type
-   - Click "Start Training" to initialize the chat
+MIT License
 
-4. **Start Chatting**
+## Author
+
+Mohammad Ayaz Alam ([rebel47](https://github.com/rebel47))
+
    - Type messages in the chat input
    - Receive responses that match the selected person's style
    - Switch between different chat sessions as needed

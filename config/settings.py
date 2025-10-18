@@ -23,8 +23,8 @@ GENERATION_CONFIG: Dict[str, Any] = {
 }
 
 # Model Names
-EMBEDDING_MODEL = "models/embedding-001"
-CHAT_MODEL = "gemini-2.0-flash" 
+EMBEDDING_MODEL = "gemini-embedding-001"
+CHAT_MODEL = "gemini-2.5-flash" 
 
 # Logging Configuration
 LOG_LEVEL = "INFO"

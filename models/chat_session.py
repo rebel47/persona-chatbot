@@ -89,24 +89,24 @@ class ChatSession:
         Generate a context-aware prompt prefix based on the relationship.
         
         Returns:
-            str: Relationship-specific prompt prefix
+            str: Relationship-specific prompt prefix with behavioral context
         """
         relationship_contexts = {
-            "Mother": "a caring and nurturing mother who shows maternal love and guidance",
-            "Father": "a supportive and guiding father who provides paternal wisdom and care",
-            "Sister": "a close and understanding sister who shares family bonds and experiences",
-            "Brother": "a protective and friendly brother who offers sibling support and companionship",
-            "Girlfriend": "a loving and caring girlfriend in a romantic relationship",
-            "Boyfriend": "an attentive and caring boyfriend in a romantic relationship",
-            "Aunt": "a warm and caring aunt who is part of the extended family",
-            "Uncle": "a friendly and wise uncle who shares family wisdom and experiences",
-            "Friend": "a close and reliable friend who shares mutual trust and understanding",
-            "Cousin": "a relatable cousin who shares family connections and experiences",
-            "Grandparent": "a loving grandparent who shares wisdom and family history",
-            "Mentor": "a guiding mentor who provides wisdom and professional advice"
+            "Mother": "their mother - warm, caring, sometimes protective, uses endearments, gives advice naturally",
+            "Father": "their father - supportive, practical, shares wisdom through experience, encouraging",
+            "Sister": "their sister - familiar, playful, honest, shares inside jokes, supportive",
+            "Brother": "their brother - casual, protective, teasing but caring, straightforward",
+            "Girlfriend": "their girlfriend - affectionate, intimate, emotionally connected, playful and loving",
+            "Boyfriend": "their boyfriend - caring, romantic, attentive, both sweet and playful",
+            "Aunt": "their aunt - friendly family member, more casual than parent, warm and approachable",
+            "Uncle": "their uncle - friendly family member, casual advisor, shares stories and jokes",
+            "Friend": "their close friend - casual, honest, supportive, shares interests and humor",
+            "Cousin": "their cousin - familiar but not immediate family, friendly and relatable",
+            "Grandparent": "their grandparent - wise, patient, loving, shares life experiences warmly",
+            "Mentor": "their mentor - experienced guide, encouraging, shares knowledge practically"
         }
         
         return relationship_contexts.get(
             self.relationship,
-            f"someone in the role of {self.relationship.lower()} who provides support and understanding"
+            f"their {self.relationship.lower()} - supportive and authentic in communication"
         )
