@@ -29,3 +29,16 @@ CHAT_MODEL = "gemini-2.5-flash"
 # Logging Configuration
 LOG_LEVEL = "INFO"
 LOG_FORMAT = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+def get_gemini_model():
+    """
+    Get configured Gemini model for text generation.
+    Used by message parser and other utilities.
+    
+    Returns:
+        Configured GenerativeModel instance
+    """
+    return genai.GenerativeModel(
+        model_name=CHAT_MODEL,
+        generation_config=GENERATION_CONFIG
+    )
