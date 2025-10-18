@@ -1,14 +1,53 @@
+# Virtual Environment
 .venv
+venv/
+env/
+
+# Environment Variables (NEVER commit API keys!)
 .env
+
+# Vector Cache (large files, can be regenerated)
 vector_cache/
+
+# Python Cache Files
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 .Python
 *.so
+
+# Python Package Build Files
 *.egg
 *.egg-info/
 dist/
 build/
+
+# Streamlit Secrets (contains API keys)
 .streamlit/secrets.toml
+
+# Jupyter Notebooks (keep local only, don't push to GitHub)
+*.ipynb
+
+# Database Files
+*.sqlite3
+*.db
+
+# OS-specific Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE/Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Uploaded Chat Files (privacy)
+uploads/
+*.txt.backup
